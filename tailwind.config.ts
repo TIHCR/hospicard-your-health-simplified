@@ -7,12 +7,20 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "1rem",
       screens: {
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1200px",
         "2xl": "1400px",
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["Inter", "sans-serif"],
+        display: ["Poppins", "sans-serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -47,6 +55,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        hospicard: {
+          red: "hsl(var(--hospicard-red))",
+          "red-dark": "hsl(var(--hospicard-red-dark))",
+          blue: "hsl(var(--hospicard-blue))",
+          "blue-light": "hsl(var(--hospicard-blue-light))",
+          "blue-dark": "hsl(var(--hospicard-blue-dark))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -62,23 +77,17 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        xl: "calc(var(--radius) + 4px)",
+        "2xl": "calc(var(--radius) + 8px)",
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
