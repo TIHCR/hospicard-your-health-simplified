@@ -24,27 +24,22 @@ export const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/95 backdrop-blur-md shadow-card py-2"
-          : "bg-transparent py-4"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 bg-[#0B1C2D] shadow-card py-3 transition-all duration-300"
     >
       <div className="container mx-auto flex items-center justify-between">
         <a href="#inicio" className="flex items-center">
           <img src={logo} alt="Hospicard Logo" className="h-12 md:h-14" />
         </a>
-
-        {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-8">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-foreground/80 hover:text-primary font-medium transition-colors duration-200 text-sm"
+              className="text-white/80 hover:text-blue-300 font-medium transition-colors duration-200 text-sm"
             >
               {link.label}
             </a>
+
           ))}
           <a
             href="#categorias"

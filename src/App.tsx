@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Painel from "./pages/Painel";
 import NotFound from "./pages/NotFound";
+import EnvioAdesao from "@/components/EnvioAdesao"; // Ajuste path se em outra pasta
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/painel" element={<Painel />} />
+          <Route path="/envioadesao" element={<EnvioAdesao />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
