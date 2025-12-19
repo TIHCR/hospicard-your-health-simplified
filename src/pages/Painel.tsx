@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { Users, Stethoscope, FileText, Home, Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Users, Stethoscope, FileText, Home, Menu, X, LogOut, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthContext";
 import logo from "@/assets/logo.png";
 import GerenciarAdesao from "@/components/admin/GerenciarAdesao";
 import GerenciarEspecialidades from "@/components/admin/GerenciarEspecialidades";
@@ -16,8 +18,39 @@ const menuItems = [
 ];
 
 const Painel = () => {
-  const [activeSection, setActiveSection] = useState<AdminSection>("adesao");
+  // ✅ NOVO: Pegar seção da URL
+  const { section } = useParams<{ section?: AdminSection }>();
+  
+  // ✅ ATUALIZADO: Usar seção da URL se disponível
+  const [activeSection, setActiveSection] = useState<AdminSection>(
+    (section as AdminSection) || "adesao"
+  );
+  
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  // ✅ NOVO: Atualizar quando a URL mudar
+  useEffect(() => {
+    if (section) {
+      setActiveSection(section as AdminSection);
+    }
+  }, [section]);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/login");
+    } catch (error) {
+      console.error("Erro ao fazer logout:", error);
+    }
+  };
+
+  // ✅ NOVO: Função para navegar para seção
+  const handleSectionChange = (newSection: AdminSection) => {
+    setActiveSection(newSection);
+    navigate(`/painel/${newSection}`);
+  };
 
   const renderContent = () => {
     switch (activeSection) {
@@ -62,7 +95,8 @@ const Painel = () => {
           {menuItems.map((item) => (
             <button
               key={item.id}
-              onClick={() => setActiveSection(item.id)}
+              // ✅ ATUALIZADO: Usar handleSectionChange
+              onClick={() => handleSectionChange(item.id)}
               className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors text-left ${
                 activeSection === item.id
                   ? "bg-primary text-primary-foreground"
@@ -76,13 +110,22 @@ const Painel = () => {
         </nav>
 
         {/* Back to Site */}
-        <div className="p-2 border-t border-border">
+        <div className="p-2 border-t border-border space-y-2">
           <Link to="/">
             <button className="w-full flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-muted text-foreground transition-colors">
               <Home className="h-5 w-5 flex-shrink-0" />
               {sidebarOpen && <span className="text-sm font-medium">Voltar ao Site</span>}
             </button>
           </Link>
+
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-red-100 dark:hover:bg-red-900 text-red-600 dark:text-red-400 transition-colors"
+          >
+            <LogOut className="h-5 w-5 flex-shrink-0" />
+            {sidebarOpen && <span className="text-sm font-medium">Sair</span>}
+          </button>
         </div>
       </aside>
 
@@ -102,6 +145,17 @@ const Painel = () => {
             <h1 className="text-xl font-semibold text-foreground">
               {menuItems.find((item) => item.id === activeSection)?.label}
             </h1>
+          </div>
+
+          {/* User Info */}
+          <div className="flex items-center gap-3">
+            <div className="text-right hidden sm:block">
+              <p className="text-sm font-medium text-foreground">{user?.username}</p>
+              <p className="text-xs text-muted-foreground">{user?.email}</p>
+            </div>
+            <div className="p-2 bg-primary/10 rounded-full">
+              <User className="h-5 w-5 text-primary" />
+            </div>
           </div>
         </header>
 

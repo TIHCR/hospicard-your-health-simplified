@@ -22,7 +22,7 @@ interface FormData {
 
 const estados = ["AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"];
 const estadosCivil = ["Solteiro(a)", "Casado(a)", "Divorciado(a)", "Viúvo(a)", "Separado(a)"];
-const formasPagamento = ["Cartão de Crédito", "Boleto", "Débito Automático", "PIX"];
+const formasPagamento = [ "Boleto - 12x Parcelas", "Débito Automático Sicredi", ];
 
 const EnvioAdesao = () => {
   const navigate = useNavigate();
@@ -225,8 +225,9 @@ const EnvioAdesao = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-semibold text-foreground mb-3">Nome do Pai</label>
+                <label className="block text-sm font-semibold text-foreground mb-3">Nome do Pai *</label>
                 <input name="nome_pai" value={formData.nome_pai} onChange={handleChange} className="w-full p-4 bg-background border border-border rounded-2xl focus:border-secondary focus:outline-none hover:border-secondary/50 transition-all" />
+              required
               </div>
               <div>
                 <label className="block text-sm font-semibold text-foreground mb-3">Nome da Mãe</label>
