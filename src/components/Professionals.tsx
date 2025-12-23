@@ -7,6 +7,7 @@ import {
   Phone,
   User
 } from "lucide-react";
+import api from "../config/api";
 
 interface Specialty {
   id: number;
@@ -59,11 +60,10 @@ export const Professionals = () => {
     const fetchSpecialties = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/especialidades.php");
-        const data = await response.json();
+        const response = await api.get("/especialidades.php");
         
-        // Garante que data é um array
-        const dataArray = Array.isArray(data) ? data : [];
+        // Garante que response.data é um array
+        const dataArray = Array.isArray(response.data) ? response.data : [];
         
         const activeSpecialties = dataArray
           .filter((spec: Specialty) => spec.ativo === 1)
@@ -87,11 +87,10 @@ export const Professionals = () => {
       setLoadingProfessionals(true);
       setSelectedSpecialty(specialty);
       
-      const response = await fetch(`/profissionais.php?especialidade_id=${specialty.id}`);
-      const data = await response.json();
+      const response = await api.get(`/profissionais.php?especialidade_id=${specialty.id}`);
       
-      // Garante que data é um array
-      const dataArray = Array.isArray(data) ? data : [];
+      // Garante que response.data é um array
+      const dataArray = Array.isArray(response.data) ? response.data : [];
       setProfessionals(dataArray);
     } catch (err) {
       console.error("Erro ao buscar profissionais:", err);
